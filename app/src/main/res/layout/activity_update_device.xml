@@ -10,18 +10,61 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="反馈内容："/>
+        android:text="反馈内容：" />
 
-
-    <Button
-        android:id="@+id/bt_query"
+    <Spinner
+        android:id="@+id/sp_nner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查询指令"/>
+        android:entries="@array/languages"
+        android:gravity="center"
+        android:spinnerMode="dialog">
+
+    </Spinner>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="升级进度:"
+            android:textColor="@android:color/black" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="0" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择更新文件" />
 
     <Button
         android:id="@+id/bt_reset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="重启指令"/>
+        android:text="启动更新" />
+
+    <Button
+        android:id="@+id/bt_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询版本号" />
+
+    <Button
+        android:id="@+id/bt_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置波特率" />
+
 </LinearLayout>

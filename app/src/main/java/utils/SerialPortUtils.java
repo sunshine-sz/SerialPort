@@ -15,7 +15,7 @@ public class SerialPortUtils {
 
     private final String TAG = "SerialPortUtils";
     private String path = "/dev/ttyS1";
-    private int baudrate = 9600;
+//    private int baudrate = 9600;
     public boolean serialPortStatus = false; //是否打开串口标志
     public String data_;
     public boolean threadStatus; //线程状态，为了安全终止线程
@@ -30,7 +30,7 @@ public class SerialPortUtils {
      * 打开串口
      * @return serialPort串口对象
      */
-    public SerialPort openSerialPort(){
+    public SerialPort openSerialPort(int baudrate){
         try {
                 serialPort = new SerialPort(new File(path),baudrate,0);
                 this.serialPortStatus = true;
@@ -74,18 +74,14 @@ public class SerialPortUtils {
      * 发送串口指令（字符串）
      * @param data String数据指令
      */
-    public void sendSerialPort(String data){
+    public void sendSerialPort(byte[] data){
         Log.d(TAG, "sendSerialPort: 发送数据");
         try {
-            byte[] sendData = data.getBytes(); //string转byte[]
-            this.data_ = new String(sendData); //byte[]转string
-            if (sendData.length > 0) {
+            if (data.length > 0) {
                 if (outputStream==null){
                     return;
                 }
-                outputStream.write(sendData);
-                outputStream.write('\n');
-                //outputStream.write('\r'+'\n');
+                outputStream.write(data);
                 outputStream.flush();
                 Log.d(TAG, "sendSerialPort: 串口数据发送成功");
             }

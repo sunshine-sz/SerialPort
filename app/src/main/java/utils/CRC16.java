@@ -1,5 +1,7 @@
 package utils;
 
+import android.util.Log;
+
 import java.util.List;
 
 /*************************************************************************
@@ -73,9 +75,24 @@ public class CRC16 {
 			byte b = data[i];			
 			crc = (short) ((crc << 8) ^ CRCTable[((crc >> 8 ^ b) & 0xFF)]);
 		}		
-		
+		//Log.e("CRC16","calcCRC:"+crc+"\n"+Integer.toHexString(crc));
 		return FormatTransfer.toLH(crc);
-		
+	}
+
+	public static byte[] calcReCRC(byte[] data, int startIndex, int toIndex) {
+		short crc = 0x0000;
+		for (int i = startIndex; i <= toIndex; i++) {
+			byte b = data[i];
+			crc = (short) ((crc << 8) ^ CRCTable[((crc >> 8 ^ b) & 0xFF)]);
+		}
+		Log.e("CRC16","crc:"+(~crc));
+		Log.e("CRC16","crc2:"+(Integer.toHexString(~crc)));
+		String hexString = Integer.toHexString(~crc);
+		int i = 4 - hexString.length();
+		for (int j = 0; j < i; j++) {
+			hexString = "0"+hexString;
+		}
+		return HexStringUtils.hexString2Bytes(hexString);
 	}
 
 	/**
@@ -91,5 +108,20 @@ public class CRC16 {
 			return true;
 		}
 		return false;
+	}
+
+
+	public static void  main(String[] args){
+		//AA18020301
+		byte[] command = new byte[]{0x18,0x02,0x03,0x01};
+		//byte[] bytes = calcReCRC(command, 0, command.length - 1);
+		short crc = 0x0000;
+		for (int i = 0; i <= command.length-1; i++) {
+			byte b = command[i];
+			crc = (short) ((crc << 8) ^ CRCTable[((crc >> 8 ^ b) & 0xFF)]);
+		}
+
+		System.out.println(Integer.toHexString(crc));
+		System.out.println(Integer.toHexString(~crc));
 	}
 }
